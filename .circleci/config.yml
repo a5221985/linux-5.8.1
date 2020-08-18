@@ -37,6 +37,12 @@ jobs:
           name: Install Python 3.x
           command: sudo apt install software-properties-common && sudo add-apt-repository ppa:deadsnakes/ppa && sudo apt update && sudo apt install python3.8 && sudo ln -f -s /usr/bin/python3.8 /usr/bin/python3
       - run:
+          name: Copy config from existing kernel
+          command: cp /boot/config-`uname -r` .config
+      - run:
+          name: Define config
+          command: make defconfig
+      - run:
           name: Run KUnit Tests
           command: ./tools/testing/kunit/kunit.py run 
       - run:
