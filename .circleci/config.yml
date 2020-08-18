@@ -24,6 +24,9 @@ jobs:
           name: Copy config from existing kernel
           command: cp /boot/config-`uname -r` .config
       - run:
+          name: Remove untracked files from previous build
+          command: git status && git clean -f -d
+      - run:
           name: Define config
           command: make defconfig
       - run:
@@ -42,9 +45,6 @@ jobs:
       - run:
           name: Install kernel component 3
           command: sudo dpkg -i ../linux-image-5.7.14-custom_5.7.14-custom-1_amd64.deb
-      - run:
-          name: Remove untracked files from previous build
-          command: git status && git clean -f
 
 orbs:
   sonarcloud: sonarsource/sonarcloud@1.0.1
